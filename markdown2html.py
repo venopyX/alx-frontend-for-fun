@@ -178,9 +178,9 @@ def main():
     html_content = parse_headings(content)
     html_content = parse_unordered_list(html_content)
     html_content = parse_ordered_list(html_content)
+    html_content = parse_md5_and_remove_c(html_content)
     html_content = parse_paragraphs(html_content)
     html_content = parse_bold_and_emphasis(html_content)
-    html_content = parse_md5_and_remove_c(html_content)
 
     output_file = sys.argv[2]
     try:
