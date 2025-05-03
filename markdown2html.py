@@ -133,6 +133,15 @@ def parse_paragraphs(content):
     return '\n'.join(html_lines)
 
 
+def parse_bold_and_emphasis(content):
+    """
+    Parses markdown bold and emphasis text and converts them to HTML.
+    """
+    content = content.replace('**', '<strong>').replace('__', '<strong>')
+    content = content.replace('*', '<em>').replace('_', '<em>')
+    return content
+
+
 def main():
     """
     Main function to handle markdown to HTML conversion.
@@ -142,7 +151,8 @@ def main():
     html_content = parse_unordered_list(html_content)
     html_content = parse_ordered_list(html_content)
     html_content = parse_paragraphs(html_content)
-
+    html_content = parse_bold_and_emphasis(html_content)
+    
     output_file = sys.argv[2]
     try:
         with open(output_file, 'w') as html_file:
