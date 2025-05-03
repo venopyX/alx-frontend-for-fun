@@ -9,7 +9,7 @@ Usage: ./markdown2html.py <markdown_file> <output_html_file>
 import sys
 
 
-def checkargs():
+def check_args():
     """
     Validates input arguments and returns the markdown filename.
     """
@@ -29,7 +29,7 @@ def main():
     """
     Main function to handle markdown to HTML conversion.
     """
-    content = checkargs()
+    content = check_args()
     sys.exit(0)
 
 
