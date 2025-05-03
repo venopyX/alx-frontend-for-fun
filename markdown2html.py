@@ -25,11 +25,35 @@ def check_args():
         sys.exit(1)
 
 
+def parse_headings(content):
+    """
+    Parses markdown headings and converts them to HTML.
+    """
+    lines = content.split('\n')
+    html_lines = []
+    for line in lines:
+        if line.startswith('#'):
+            level = line.count('#')
+            html_line = f"<h{level}>{line[level:].strip()}</h{level}>"
+            html_lines.append(html_line)
+        else:
+            html_lines.append(line)
+    return '\n'.join(html_lines)
+
+
 def main():
     """
     Main function to handle markdown to HTML conversion.
     """
     content = check_args()
+    html_content = parse_headings(content)
+    output_file = sys.argv[2]
+    try:
+        with open(output_file, 'w') as html_file:
+            html_file.write(html_content)
+    except Exception as e:
+        print(f"Error writing to {output_file}: {e}", file=sys.stderr)
+        sys.exit(1)
     sys.exit(0)
 
 
