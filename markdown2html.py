@@ -7,6 +7,7 @@ Usage: ./markdown2html.py <markdown_file> <output_html_file>
 """
 
 import sys
+from urllib import parse
 
 
 def check_args():
@@ -41,12 +42,37 @@ def parse_headings(content):
     return '\n'.join(html_lines)
 
 
+def parse_unordered_list(content):
+    """
+    Parses markdown unordered lists and converts them to HTML.
+    """
+    lines = content.split('\n')
+    html_lines = []
+    in_list = False
+    for line in lines:
+        if line.startswith('*'):
+            if not in_list:
+                html_lines.append('<ul>')
+                in_list = True
+            html_lines.append(f"<li>{line[1:].strip()}</li>")
+        else:
+            if in_list:
+                html_lines.append('</ul>')
+                in_list = False
+            html_lines.append(line)
+    if in_list:
+        html_lines.append('</ul>')
+    return '\n'.join(html_lines)
+
+
 def main():
     """
     Main function to handle markdown to HTML conversion.
     """
     content = check_args()
     html_content = parse_headings(content)
+    html_content = parse_unordered_list(html_content)
+
     output_file = sys.argv[2]
     try:
         with open(output_file, 'w') as html_file:
