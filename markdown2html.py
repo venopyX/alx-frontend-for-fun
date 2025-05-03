@@ -88,6 +88,25 @@ def parse_ordered_list(content):
     return '\n'.join(html_lines)
 
 
+def parse_paragraphs(content):
+    """
+    Parses markdown paragraphs and converts them to HTML.
+    """
+    lines = content.split('\n')
+    html_lines = []
+    for line in lines:
+        if line.strip() and not (line.strip().startswith('<h') or
+                                 line.strip().startswith('<li>') or
+                                 line.strip().startswith('<ul>') or
+                                 line.strip().startswith('</ul>') or
+                                 line.strip().startswith('<ol>') or
+                                 line.strip().startswith('</ol>')):
+            html_lines.append(f"<p>{line.strip()}</p>")
+        else:
+            html_lines.append(line)
+    return '\n'.join(html_lines)
+
+
 def main():
     """
     Main function to handle markdown to HTML conversion.
@@ -96,6 +115,7 @@ def main():
     html_content = parse_headings(content)
     html_content = parse_unordered_list(html_content)
     html_content = parse_ordered_list(html_content)
+    html_content = parse_paragraphs(html_content)
 
     output_file = sys.argv[2]
     try:
