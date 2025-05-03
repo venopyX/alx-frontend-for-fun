@@ -9,10 +9,9 @@ Usage: ./markdown2html.py <markdown_file> <output_html_file>
 import sys
 
 
-def main():
+def checkargs():
     """
-    Main function to handle markdown to HTML conversion.
-    Validates input arguments and reads the markdown file.
+    Validates input arguments and returns the markdown filename.
     """
     if len(sys.argv) != 3:
         print("Usage: ./markdown2html.py README.md README.html", file=sys.stderr)
@@ -20,11 +19,18 @@ def main():
 
     try:
         with open(sys.argv[1], 'r') as md_file:
-            content = md_file.read()
-            sys.exit(0)
+            return md_file.read()
     except FileNotFoundError:
         print(f"Missing {sys.argv[1]}", file=sys.stderr)
         sys.exit(1)
+
+
+def main():
+    """
+    Main function to handle markdown to HTML conversion.
+    """
+    content = checkargs()
+    sys.exit(0)
 
 
 if __name__ == "__main__":
