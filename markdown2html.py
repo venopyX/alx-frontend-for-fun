@@ -91,19 +91,45 @@ def parse_ordered_list(content):
 def parse_paragraphs(content):
     """
     Parses markdown paragraphs and converts them to HTML.
+    Handles multi-line paragraphs with <br/> tags.
     """
     lines = content.split('\n')
     html_lines = []
+    current_paragraph = []
+
     for line in lines:
-        if line.strip() and not (line.strip().startswith('<h') or
-                                 line.strip().startswith('<li>') or
-                                 line.strip().startswith('<ul>') or
-                                 line.strip().startswith('</ul>') or
-                                 line.strip().startswith('<ol>') or
-                                 line.strip().startswith('</ol>')):
-            html_lines.append(f"<p>{line.strip()}</p>")
+        if (line.strip() and not (line.strip().startswith('<h') or
+                                  line.strip().startswith('<li>') or
+                                  line.strip().startswith('<ul>') or
+                                  line.strip().startswith('</ul>') or
+                                  line.strip().startswith('<ol>') or
+                                  line.strip().startswith('</ol>'))):
+            current_paragraph.append(line.strip())
         else:
-            html_lines.append(line)
+            if current_paragraph:
+                html_lines.append("<p>")
+
+                for i, para_line in enumerate(current_paragraph):
+                    html_lines.append(para_line)
+                    if i < len(current_paragraph) - 1:
+                        html_lines.append("<br/>")
+
+                html_lines.append("</p>")
+                current_paragraph = []
+
+            if line.strip() or not current_paragraph:
+                html_lines.append(line)
+
+    if current_paragraph:
+        html_lines.append("<p>")
+
+        for i, para_line in enumerate(current_paragraph):
+            html_lines.append(para_line)
+            if i < len(current_paragraph) - 1:
+                html_lines.append("<br/>")
+
+        html_lines.append("</p>")
+
     return '\n'.join(html_lines)
 
 
