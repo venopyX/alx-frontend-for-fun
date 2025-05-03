@@ -7,6 +7,7 @@ Usage: ./markdown2html.py <markdown_file> <output_html_file>
 """
 
 import sys
+from turtle import ht
 from urllib import parse
 
 
@@ -138,10 +139,34 @@ def parse_bold_and_emphasis(content):
     Parses markdown bold and emphasis text and converts them to HTML.
     """
     import re
-    
+
     content = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', content)
     content = re.sub(r'__(.*?)__', r'<em>\1</em>', content)
-    
+
+    return content
+
+
+def parse_md5_and_remove_c(content):
+    """
+    Parses custom markdown syntax for MD5 conversion and removing 'c' characters.
+
+    [[text]] -> MD5 hash of text (lowercase)
+    ((text)) -> remove all 'c' characters (case insensitive) from text
+    """
+    import re
+    import hashlib
+
+    def to_md5(match):
+        text = match.group(1)
+        return hashlib.md5(text.encode()).hexdigest()
+
+    def remove_c(match):
+        text = match.group(1)
+        return re.sub(r'[cC]', '', text)
+
+    content = re.sub(r'\[\[(.*?)\]\]', to_md5, content)
+    content = re.sub(r'\(\((.*?)\)\)', remove_c, content)
+
     return content
 
 
@@ -155,7 +180,8 @@ def main():
     html_content = parse_ordered_list(html_content)
     html_content = parse_paragraphs(html_content)
     html_content = parse_bold_and_emphasis(html_content)
-    
+    html_content = parse_md5_and_remove_c(html_content)
+
     output_file = sys.argv[2]
     try:
         with open(output_file, 'w') as html_file:
