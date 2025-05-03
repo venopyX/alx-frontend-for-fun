@@ -23,7 +23,7 @@ def main():
             content = md_file.read()
             sys.exit(0)
     except FileNotFoundError:
-        print(f"Missing {sys.argv[1]}.", file=sys.stderr)
+        print(f"Missing {sys.argv[1]}", file=sys.stderr)
         sys.exit(1)
 
 
