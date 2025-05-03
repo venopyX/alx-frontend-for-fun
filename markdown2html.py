@@ -7,9 +7,6 @@ Usage: ./markdown2html.py <markdown_file> <output_html_file>
 """
 
 import sys
-from turtle import ht
-from urllib import parse
-
 
 def check_args():
     """
