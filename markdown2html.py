@@ -137,8 +137,11 @@ def parse_bold_and_emphasis(content):
     """
     Parses markdown bold and emphasis text and converts them to HTML.
     """
-    content = content.replace('**', '<strong>').replace('__', '<strong>')
-    content = content.replace('*', '<em>').replace('_', '<em>')
+    import re
+    
+    content = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', content)
+    content = re.sub(r'__(.*?)__', r'<em>\1</em>', content)
+    
     return content
 
 
