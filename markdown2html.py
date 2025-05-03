@@ -50,7 +50,7 @@ def parse_unordered_list(content):
     html_lines = []
     in_list = False
     for line in lines:
-        if line.startswith('*'):
+        if line.startswith('- '):
             if not in_list:
                 html_lines.append('<ul>')
                 in_list = True
