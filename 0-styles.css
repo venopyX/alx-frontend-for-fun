@@ -1,48 +1,51 @@
-/* Reset default list styling and set a base font */
+*, *::before, *::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html,
+body {
+	height: 100vh;
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+
 ul {
-    list-style: none;
-    padding: 0;
-    margin: 10px;
-    display: flex;
-    justify-content: start;
-    font-family: Arial, sans-serif;
+	display: grid;
+	place-items: center;
+	list-style: none;
+	height: 100vh;
+	width: 100%;
+	grid-template-columns: repeat(3, 1fr);
 }
 
-/* Style each list item with border, column layout, and rounded corners */
 li {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 7px;
-    padding: 20px;
-    border: 3px solid black;
-    font-size: 28px;
-    font-weight: bold;
-    border-radius: 10px;
+	border: 2.5px solid #727272;
+	background: #F7F7F7;
+	border-radius: 10px;
+	width: 300px;
+	height: 450px;
+    padding-bottom: 50px;
+	display: grid;
+	place-items: center;
+	grid-template-rows: 1fr 2.5fr;
 }
 
-/* Style the icon span */
-.icon {
-    display: inline-block;
-    width: 170px;
-    height: 150px;
-    margin-top: 5px;
-    background-image: url('https://s3.amazonaws.com/alx-intranet.hbtn.io/uploads/medias/2020/2/d416199ca6ecdbd0f8a3.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUSBVO6H7D%2F20250601%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250601T164339Z&X-Amz-Expires=345600&X-Amz-SignedHeaders=host&X-Amz-Signature=2851c32f8997c814b79a968987ed94769a8a3a9329eda0a54502954a529d3b17');
-    background-repeat: no-repeat;
-    background-size: 450px 150px;
+span {
+	height: 100%;
+	width: 220px;
+	padding: 50px;
 }
 
-/* Position the sprite for HTML */
-.i-html {
-    background-position: 0 0;
+span.i-html {
+	background: url('0-sprite.png') no-repeat -40px -90px;
 }
 
-/* Position the sprite for CSS */
-.i-css {
-    background-position: -150px 0;
+span.i-css {
+	background: url('0-sprite.png') no-repeat -320px -90px;
 }
 
-/* Position the sprite for JavaScript */
-.i-js {
-    background-position: -300px 0;
+span.i-js {
+	background: url('0-sprite.png') no-repeat -610px -90px;
 }
